@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="www.thymeleaf.org" th:fragment="share(header, aside, footer)">
+<head>
+    <link rel="stylesheet" href="/css/share.css"/>
+</head>
+<body>
+    <header th:fragment="header">
+        <nav class="nav-list">
+            <ul>
+                <li><a class="nav-list-link" id="nav-home" href="/main">Home</a></li>
+                <li><a class="nav-list-link" id="nav-about-me" href="/main/aboutMe">About Me</a></li>
+                <li>
+                    <a class="nav-list-link" id="nav-projects">projects</a>
+                    <ul class="nav-dropdown-content-box" style="display:none;">
+                        <li class="nav-dropdown-content" id="nav-dropdown-content-board"><a href="/board">게시판</a></li>
+                        <li class="nav-dropdown-content" id="nav-dropdown-content-shop"><a href="/shop">쇼핑몰</a></li>
+                        <li class="nav-dropdown-content" id="nav-dropdown-content-chat"><a href="/chat">채팅</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <div class="nav-list-link" id="nav-search">
+                        <select id="search-type" class="btn">
+                            <option value="post">게시물</option>
+                            <option value="item">아이템</option>
+                        </select>
+                        <form id="search-form">
+                            <input id="search-input" type="search" placeholder="검색어 입력"/>
+                            <button id="search-btn" type="submit">검색</button>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="nav-list-link" id="nav-login">
+                        <button th:if="${#authorization.expression('isAuthenticated()')}" id="nav-login-btn" onclick="openModal()">Login</button>
+                        <section class="modal">
+                            <form action="/main/login" method="post">
+                                <div id="modal-header">
+                                    <h2>Login</h2>
+                                    <span id="modal-close" onclick="closeModal()">X</span>
+                                </div>
+                                <div id="modal-body">
+                                    <label for="login-email">Email: </label>
+                                    <input id="login-email" type="email" placeholder="Email 입력"/>
+
+                                    <label for="login-password">Password: </label>
+                                    <input id="login-password" type="password" placeholder="Password 입력"/>
+                                </div>
+                                <div id="modal-footer">
+                                    <button id="modal-login-btn" class="btn modal-btn" type="submit">Login</button>
+                                    <button id="modal-login-enroll" class="btn modal-btn" href="/main/login">회원가입</button>
+                                    <button id="modal-google-login" calss="btn modal-btn" href="/oauth2/authorization/google">Google</button>
+                                </div>
+                            </form>
+                        </section>
+                        <a th:unless="${#authorization.expression('isAuthenticated()')}" id="nav-logout" href="/logout">Logout</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="nav-list-link" th:if="${#authorization.expression('isAuthenticated()')">
+                        <img id="nav-user-image" th:src="${user.imgUrl}"/>
+                    </div>
+                    <ul id="nav-dropdown-login-box" style="display:none;">
+                        <li class="nav-dropdown-login"><a href="/user/profile">내 정보</a></li>
+                        <li class="nav-dropdown-login"><a href="/user/basket">장바구니</a></li>
+                        <li class="nav-dropdown-login"><a href="/user/purchaseList">결제목록</a></li>
+                        <li class="nav-dropdown-login"><a href="/user/postList">게시글 목록</a></li>
+                        <li class="nav-dropdown-login"><a href="/user/commentList">댓글 목록</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <aside th:fragement="aside">
+
+    </aside>
+    <footer th:fragement="footer">
+        <button class="btn-moveTop" onclick="moveToTop()"></button>
+        <span>by 717276</span>
+        <srcipt src="/js/share.js"></srcipt>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,62 @@
+/* nav */
+.nav-list{
+    display:flex;
+    justify-content:right;
+}
+.nav-list-link {
+    margin-left:70px;
+}
+
+/* login modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* 스크롤바를 표시하기 위해 */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* 배경색과 투명도 조절 */
+}
+
+#modal-header {
+    padding: 2px 16px;
+    background-color: #ebedeb;
+    /* 헤더 배경색 */
+    color: white;
+}
+
+#modal-body {
+    background-color: #fefefe;
+    margin: 15% auto;
+    /* 가운데 정렬 */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* 모달 창 너비 */
+}
+
+.modal-btn {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.btn-moveTop {
+    position: fixed;
+    right: 60px;
+    bottom: 60px;
+    width: 65px;
+    height: 65px;
+    background-image: url(..static/img/btn-moveTop.png);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+.btn-moveTop:hover{
+    background-image: url(../src/img/btn-moveTop-hover.png);
+    transition: 0.5s ease-out;
+}
