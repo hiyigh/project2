@@ -30,6 +30,3 @@ $btnPrev.on("click",function(){
     }
 });
 
-document.ready(function(){
-    $btnPrev.prop
-});

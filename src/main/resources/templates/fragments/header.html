@@ -1,6 +1,11 @@
-<!DOCTYPE html>
-<html lang="ko" xmlns:th="www.thymeleaf.org" th:fragment="share(header, aside, footer)">
+<!doctype html>
+<html lang="ko" xmlns:th="www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Header</title>
     <link rel="stylesheet" href="/css/share.css"/>
 </head>
 <body>
@@ -31,7 +36,7 @@
                 </li>
                 <li>
                     <div class="nav-list-link" id="nav-login">
-                        <button th:if="${#authorization.expression('isAuthenticated()')}" id="nav-login-btn" onclick="openModal()">Login</button>
+                        <button sec:authorize="isAuthenticated()" id="nav-login-btn" onclick="openModal()">Login</button>
                         <section class="modal">
                             <form action="/main/login" method="post">
                                 <div id="modal-header">
@@ -70,13 +75,5 @@
             </ul>
         </nav>
     </header>
-    <aside th:fragement="aside">
-
-    </aside>
-    <footer th:fragement="footer">
-        <button class="btn-moveTop" onclick="moveToTop()"></button>
-        <span>by 717276</span>
-        <srcipt src="/js/share.js"></srcipt>
-    </footer>
 </body>
 </html>

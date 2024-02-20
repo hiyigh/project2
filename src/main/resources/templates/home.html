@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="/css/share.css"/>
 </head>
 <body>
-<header th:replace="~{/share/share.html::header}"></header>
+<header th:replace="~{/fragments/header.html::header}"></header>
 <main>
     <section class="home-img-slide">
         <ul>
             <li class="home-img-list" th:each="image : ${homeImage}">
-                <img class="home-img" th:src="${image.imageUrl}">
+<!--                <img class="home-img" th:src="${image.imageUrl}">-->
+                <p><strong><span style="margin-top=30%; text-align=center;">TEST</span></strong></p>
             </li>
         </ul>
         <div class="home-img-btn">
@@ -23,6 +24,6 @@
         </div>
     </section>
 </main>
-<footer th:replace="~{/share/share.html::footer}"></footer>
+<footer th:replace="~{/fragments/footer.html::footer}"></footer>
 </body>
 </html>
