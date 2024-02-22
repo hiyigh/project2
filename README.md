@@ -2,6 +2,7 @@
 - 2/17 (erd modeling, UI)
 - 2/18 (환경설정, check list, 화면)
 - 2/19 (erd modeling 수정, 화면)
+- 2/20 ~ (구현)
 
 # 목표
 project1 에서 부족했던 부분을 보충하기 위해서
