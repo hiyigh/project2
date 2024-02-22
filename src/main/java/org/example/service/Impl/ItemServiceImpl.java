@@ -1,4 +1,4 @@
 package org.example.service.Impl;
 
-public interface ItemServImpl {
+public class ItemServiceImpl {
 }

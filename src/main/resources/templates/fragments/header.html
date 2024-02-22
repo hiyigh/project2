@@ -1,79 +1,150 @@
 <!doctype html>
-<html lang="ko" xmlns:th="www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="ko" xmlns:th="www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Header</title>
-    <link rel="stylesheet" href="/css/share.css"/>
 </head>
 <body>
     <header th:fragment="header">
-        <nav class="nav-list">
-            <ul>
-                <li><a class="nav-list-link" id="nav-home" href="/main">Home</a></li>
-                <li><a class="nav-list-link" id="nav-about-me" href="/main/aboutMe">About Me</a></li>
-                <li>
-                    <a class="nav-list-link" id="nav-projects">projects</a>
-                    <ul class="nav-dropdown-content-box" style="display:none;">
-                        <li class="nav-dropdown-content" id="nav-dropdown-content-board"><a href="/board">게시판</a></li>
-                        <li class="nav-dropdown-content" id="nav-dropdown-content-shop"><a href="/shop">쇼핑몰</a></li>
-                        <li class="nav-dropdown-content" id="nav-dropdown-content-chat"><a href="/chat">채팅</a></li>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">717276</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">통합 검색</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Projects
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="/board">Board</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/shop">Items</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/chat">Chat</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="/map">Map</a></li>
+                            </ul>
+                        </li>
                     </ul>
-                </li>
-                <li>
                     <div class="nav-list-link" id="nav-search">
                         <select id="search-type" class="btn">
                             <option value="post">게시물</option>
                             <option value="item">아이템</option>
                         </select>
-                        <form id="search-form">
+                        <form id="search-form" style="display:inline;">
                             <input id="search-input" type="search" placeholder="검색어 입력"/>
-                            <button id="search-btn" type="submit">검색</button>
+                            <button class="btn" id="search-btn" type="submit">검색</button>
                         </form>
                     </div>
-                </li>
-                <li>
-                    <div class="nav-list-link" id="nav-login">
-                        <button sec:authorize="isAuthenticated()" id="nav-login-btn" onclick="openModal()">Login</button>
-                        <section class="modal">
-                            <form action="/main/login" method="post">
-                                <div id="modal-header">
-                                    <h2>Login</h2>
-                                    <span id="modal-close" onclick="closeModal()">X</span>
-                                </div>
-                                <div id="modal-body">
-                                    <label for="login-email">Email: </label>
-                                    <input id="login-email" type="email" placeholder="Email 입력"/>
 
-                                    <label for="login-password">Password: </label>
-                                    <input id="login-password" type="password" placeholder="Password 입력"/>
-                                </div>
-                                <div id="modal-footer">
-                                    <button id="modal-login-btn" class="btn modal-btn" type="submit">Login</button>
-                                    <button id="modal-login-enroll" class="btn modal-btn" href="/main/login">회원가입</button>
-                                    <button id="modal-google-login" calss="btn modal-btn" href="/oauth2/authorization/google">Google</button>
-                                </div>
-                            </form>
-                        </section>
-                        <a th:unless="${#authorization.expression('isAuthenticated()')}" id="nav-logout" href="/logout">Logout</a>
+                    <div class="login-position">
+                        <a class="btn login-btn" th:href="@{/login}" sec:authorize="isAnonymous()">
+                            <i class="fas fa-sign-in-alt"></i>Login
+                        </a>
                     </div>
-                </li>
-                <li>
-                    <div class="nav-list-link" th:if="${#authorization.expression('isAuthenticated()')">
-                        <img id="nav-user-image" th:src="${user.imgUrl}"/>
-                    </div>
-                    <ul id="nav-dropdown-login-box" style="display:none;">
-                        <li class="nav-dropdown-login"><a href="/user/profile">내 정보</a></li>
-                        <li class="nav-dropdown-login"><a href="/user/basket">장바구니</a></li>
-                        <li class="nav-dropdown-login"><a href="/user/purchaseList">결제목록</a></li>
-                        <li class="nav-dropdown-login"><a href="/user/postList">게시글 목록</a></li>
-                        <li class="nav-dropdown-login"><a href="/user/commentList">댓글 목록</a></li>
-                    </ul>
-                </li>
-            </ul>
+                    <li class="nav-item login" sec:authorize="isAuthenticated()">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span th:text="${#authentication.getPrincipal().user.userName}"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/myProfile">내정보</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/myBoard">내 게시물</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/myComment">내 댓글</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/myBasket">장바구니</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/myPurchase">결제목록</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                        </ul>
+                    </li>
+                </div>
+            </div>
         </nav>
+
+
+<!--        <nav class="nav-list">-->
+<!--            <ul>-->
+<!--                <li><a class="nav-list-link" id="nav-home" href="/main">Home</a></li>-->
+<!--                <li><a class="nav-list-link" id="nav-about-me" href="/main/aboutMe">About Me</a></li>-->
+<!--                <li>-->
+<!--                    <a class="nav-list-link" id="nav-projects">projects</a>-->
+<!--                    <ul class="nav-dropdown-content-box" style="display:none;">-->
+<!--                        <li class="nav-dropdown-content" id="nav-dropdown-content-board"><a href="/board">게시판</a></li>-->
+<!--                        <li class="nav-dropdown-content" id="nav-dropdown-content-shop"><a href="/shop">쇼핑몰</a></li>-->
+<!--                        <li class="nav-dropdown-content" id="nav-dropdown-content-chat"><a href="/chat">채팅</a></li>-->
+<!--                    </ul>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <div class="nav-list-link" id="nav-search">-->
+<!--                        <select id="search-type" class="btn">-->
+<!--                            <option value="post">게시물</option>-->
+<!--                            <option value="item">아이템</option>-->
+<!--                        </select>-->
+<!--                        <form id="search-form">-->
+<!--                            <input id="search-input" type="search" placeholder="검색어 입력"/>-->
+<!--                            <button id="search-btn" type="submit">검색</button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <div class="nav-list-link" id="nav-login">-->
+<!--                        <div sec:authorize="!isAuthenticated()">-->
+<!--                            <a class="btn" id="nav-login-btn" onclick="openModal()">Login</a>-->
+<!--                        </div>-->
+<!--                        <div sec:authorize="isAuthenticated()" >-->
+<!--                            <a id="nav-logout" href="/logout">Logout</a>-->
+<!--                        </div>-->
+<!--                        <section class="modal">-->
+<!--                            <form action="/main/login" method="post">-->
+<!--                                <div id="modal-header">-->
+<!--                                    <h2>Login</h2>-->
+<!--                                    <span id="modal-close" onclick="closeModal()">X</span>-->
+<!--                                </div>-->
+<!--                                <div id="modal-body">-->
+<!--                                    <label for="login-email">Email: </label>-->
+<!--                                    <input id="login-email" type="email" placeholder="Email 입력"/>-->
+
+<!--                                    <label for="login-password">Password: </label>-->
+<!--                                    <input id="login-password" type="password" placeholder="Password 입력"/>-->
+<!--                                </div>-->
+<!--                                <div id="modal-footer">-->
+<!--                                    <button id="modal-login-btn" class="btn modal-btn" type="submit">Login</button>-->
+<!--                                    <button id="modal-login-enroll" class="btn modal-btn" href="/main/login">회원가입</button>-->
+<!--                                    <button id="modal-google-login" calss="btn modal-btn" href="/oauth2/authorization/google">Google</button>-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                        </section>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--                <li>-->
+<!--                    <div class="nav-list-link" sec:authorize="isAuthenticated()">-->
+<!--                        <img id="nav-user-image" th:src="${user.imgUrl}"/>-->
+<!--                    </div>-->
+<!--                    <ul id="nav-dropdown-login-box" style="display:none;">-->
+<!--                        <li class="nav-dropdown-login"><a href="/user/profile">내 정보</a></li>-->
+<!--                        <li class="nav-dropdown-login"><a href="/user/basket">장바구니</a></li>-->
+<!--                        <li class="nav-dropdown-login"><a href="/user/purchaseList">결제목록</a></li>-->
+<!--                        <li class="nav-dropdown-login"><a href="/user/postList">게시글 목록</a></li>-->
+<!--                        <li class="nav-dropdown-login"><a href="/user/commentList">댓글 목록</a></li>-->
+<!--                    </ul>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </nav>-->
     </header>
 </body>
 </html>

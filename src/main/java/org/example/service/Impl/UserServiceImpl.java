@@ -1,5 +1,5 @@
 package org.example.service.Impl;
 
-public interface UserServImpl
+public class UserServiceImpl
 {
 }

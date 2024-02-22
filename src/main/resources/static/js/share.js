@@ -12,7 +12,7 @@ $('#search-form').submit(function(event){
     window.location.href="/main/search?searchType=" + searchType + "&keyword=" + keyword;
 });
 // dropdown content menu
-$('#nav-projects').click(function(){
+$('#nav-projects').on("click", function(){
     let dropdown = $('#nav-dropdown-content-box');
     if (dropdown.css('display') === 'block') {
         dropdown.css('display','none');
