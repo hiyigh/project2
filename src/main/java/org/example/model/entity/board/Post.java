@@ -1,12 +1,13 @@
-package org.example.model.entity;
+package org.example.model.entity.board;
 
 import lombok.Builder;
 import lombok.Getter;
-import org.example.model.dto.PostDto;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+import lombok.NoArgsConstructor;
+import org.example.model.dto.board.PostDto;
+import org.example.model.entity.util.CreatedAt;
 
-@EntityScan
 @Getter
+@NoArgsConstructor
 public class Post extends CreatedAt {
     private int post_id;
     private int post_category_id;
@@ -16,9 +17,8 @@ public class Post extends CreatedAt {
     private String post_title;
     private String post_content;
     @Builder
-    public Post(int post_id, int post_category_id, int post_writer,
+    public Post(int post_category_id, int post_writer,
                 String post_title, String post_content, int post_like, int post_hits){
-        this.post_id = post_id;
         this.post_category_id = post_category_id;
         this.post_writer = post_writer;
         this.post_title = post_title;

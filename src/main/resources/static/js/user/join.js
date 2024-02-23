@@ -76,7 +76,7 @@ $('#input_password , #check_password').on('change keyup', function(){
             validPasswordConfirm = true;
         }
     } else {
-        ValidUtil.toggle_valid_status('intput_password', 'red');
+        ValidUtil.toggle_valid_status('input_password', 'red');
         ValidUtil.toggle_valid_status('check_password', 'red');
         ValidUtil.change_display_status('check_password','block','비밀번호를 입력해 주세요');
     }
@@ -108,7 +108,7 @@ function submit(){
         if (valid_email && valid_password && valid_userName && validPasswordConfirm) {
             $('register_btn').attr('disabled', false);
         } else {
-            $('register_btn').attr('disbaled', true);
+            $('register_btn').attr('disabled', true);
         }
     });
 }
