@@ -18,8 +18,9 @@ public class Comment extends CreatedAt {
     private int comment_parent_id;
 
     @Builder
-    public Comment(int post_id, int comment_writer, String comment_content, int comment_dept,
+    public Comment(int comment_id, int post_id, int comment_writer, String comment_content, int comment_dept,
                    int comment_like, int comment_parent_id) {
+        this.comment_id = comment_id;
         this.post_id = post_id;
         this.comment_writer = comment_writer;
         this.comment_content = comment_content;

@@ -10,18 +10,9 @@ import org.example.model.enums.Payment;
 @Setter
 public class OrderDto {
     private int order_id;
-    private User user;
-    private Item item;
+    private int user_id;
+    private int item_id;
     private int amount;
     private String address;
-    private Payment payment;
-    public void allocPayment(String payment) {
-        if (payment.equals("체크/신용카드")) {
-            this.payment = Payment.CARD;
-        } else if (payment.equals("휴대폰결제")) {
-            this.payment = Payment.MOBILE;
-        } else if (payment.equals("무통장입금")) {
-            this.payment = Payment.ACCOUNT;
-        }
-    }
+    private String payment;
 }
