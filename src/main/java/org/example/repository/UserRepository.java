@@ -67,6 +67,13 @@ public class UserRepository {
         Map<String, Object> result = mappingItemList(rows, 0);
         return result;
     }
+
+    public int getUserIdByEmail(String email) {
+        String sql = "select user_id from Users where user_email like ?";
+        Integer result = jdbcTemplate.queryForObject(sql, Integer.class ,email);
+        if (result == null) result = 0;
+        return (int) result;
+    }
     public Map<String, Object> getUserPurchaseList(int userId) {
         // order , item, img
         String sql = "select o.*, i.*, f.item_filepath as file_path " +
@@ -149,5 +156,6 @@ public class UserRepository {
         result.put("postTitleList", postTitleList);
         return result;
     }
+
 
 }

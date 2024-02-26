@@ -11,5 +11,5 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 public class CreatedAt {
-    private LocalDateTime createdAt = LocalDateTime.now();
+    protected LocalDateTime createdAt = LocalDateTime.now();
 }

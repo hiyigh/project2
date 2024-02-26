@@ -1,19 +1,26 @@
 package org.example.controller.web;
 
 import lombok.RequiredArgsConstructor;
+import org.example.model.dto.UserDto;
 import org.example.model.dto.board.PostDto;
 import org.example.model.entity.User;
 import org.example.model.entity.board.Post;
+import org.example.model.entity.board.PostFile;
 import org.example.model.entity.util.Category;
 import org.example.model.enums.CategoryType;
 import org.example.service.CategoryService;
 import org.example.service.PostService;
 import org.example.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -35,22 +42,17 @@ public class BoardController {
         return "/board/write";
     }
     @PostMapping("/write")
-    public String savePost(PostDto postDto) {
-        Post post = Post.builder()
-                .post_category_id(postDto.getPost_category_id())
-                .post_writer(postDto.getPost_writer())
-                .post_title(postDto.getPost_title())
-                .post_content(postDto.getPost_content())
-                .post_like(postDto.getPost_like())
-                .post_hits(postDto.getPost_hits())
-                .build();
-        postService.savePost(post);
-        return "/board/list";
+    public ResponseEntity savePost(@RequestPart(value="images" , required = false)List<MultipartFile> imageList,
+                                   @RequestPart(value="postWrite") PostDto.Write postDto,
+                                   AuthenticatedPrincipal principal) {
+        int userId = userService.getUserIdByEmail(principal.getName());
+        int postId = postService.savePost(userId, postDto, imageList);
+        return ResponseEntity.ok(postId);
     }
     @DeleteMapping("/delete/{id}")
-    public String deletePost(@PathVariable int postId) {
+    public ResponseEntity deletePost(@PathVariable int postId) {
         postService.deletePost(postId);
-        return "success";
+        return ResponseEntity.ok("ok");
     }
     @GetMapping("/edit/{id}")
     public String editPost(@PathVariable int postId, Model model) {
@@ -58,25 +60,30 @@ public class BoardController {
         model.addAttribute("postDto", postDto.get("postDto"));
         return "/board/edit";
     }
-    @PostMapping("/edit")
-    @ResponseBody
-    public String editPost(@RequestBody PostDto postDto) {
-        Post post = PostDto.toEntity(postDto);
-        postService.editPost(post);
-        return "success";
+    @PutMapping("/edit")
+    public ResponseEntity editPost(@RequestPart(value = "jsonData") PostDto.Write postDto,
+                                   @RequestPart(value= "plusImageFile")List<MultipartFile> postFile,
+                                   @RequestPart(value = "removeImageFile")List<String> removeFile,
+                                   @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        postService.editPost(postDto, postFile, removeFile);
+        return ResponseEntity.status(HttpStatus.OK).body("ok");
     }
     @GetMapping("/post/{id}")
-    public String getPost(@PathVariable int postId, Model model) {
-        Map<String, Object> postDto = postService.getPostByPostId(postId);
-        model.addAttribute("postDto", postDto.get("postDto"));
-        model.addAttribute("comments", postDto.get("comments"));
-        return "/board/post";
+    public ResponseEntity getPost(@PathVariable int postId, Model model) {
+        Map<String, Object> map = postService.getPostByPostId(postId);
+        Post post = (Post)map.get("post");
+
+        UserDto userDto = userService.getUserById(post.getPost_writer());
+        map.put("userDto", userDto);
+
+        return ResponseEntity.status(HttpStatus.OK).body(map);
     }
 
-    @GetMapping("/list/{categoryId}")
-    public String getPostList(@PathVariable int categoryId, Model model) {
-        List<PostDto> postList = postService.getPostList(categoryId);
-        model.addAttribute("postList", postList);
-        return "/board/list";
+    @GetMapping(value = { "/list", "/list/{categoryId}"})
+    public ResponseEntity getPostList(@PathVariable(required = false) int categoryId) {
+        List<PostDto.Load> postList = postService.getPostList(categoryId);
+
+        return ResponseEntity.status(HttpStatus.OK).body(postList);
     }
 }

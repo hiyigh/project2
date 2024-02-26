@@ -1,6 +1,7 @@
 package org.example.service.Impl;
 
 import lombok.RequiredArgsConstructor;
+import org.example.model.dto.UserDto;
 import org.example.model.entity.User;
 import org.example.model.entity.board.Comment;
 import org.example.model.entity.shop.Item;
@@ -30,8 +31,15 @@ public class UserServiceImpl implements UserService {
         userRepository.edit(user);
     }
     @Override
-    public User getUserById(int userId) {
-        return userRepository.getUserById(userId);
+    public UserDto getUserById(int userId) {
+        User user = userRepository.getUserById(userId);
+        UserDto userDto = UserDto.builder()
+                .user_id(user.getUser_id())
+                .user_name(user.getUser_name())
+                .user_img(user.getUser_img())
+                .role(user.getUser_role())
+                .build();
+        return userDto;
     }
 
     @Override
@@ -64,4 +72,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUserPurchaseList(userId);
     }
 
+    @Override
+    public int getUserIdByEmail(String email) {
+        return userRepository.getUserIdByEmail(email);
+    }
 }
