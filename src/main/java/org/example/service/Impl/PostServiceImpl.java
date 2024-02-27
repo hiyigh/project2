@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -70,14 +72,20 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void editPost(PostDto.Write postDto) {
-        Post post = Post.builder()
-                .post_category_id(postDto.getPost_category_id())
-                .post_writer(postDto.getPost_writer())
-                .post_title(postDto.getPost_title())
-                .post_content(postDto.getPost_content())
-                .build();
-        boardRepository.editPost(post);
+    public void editPost(int postId, PostDto.Write postDto, List<MultipartFile> postFile, List<String> rmFile) {
+        if (rmFile != null) {
+            removeFile(postId, rmFile);
+        }
+        if (postFile != null) {
+            postFileSave(postId, postFile);
+        }
+        boardRepository.editPost(postId, postDto);
+    }
+    private void removeFile(int postId, List<String> rmFileList) {
+        for (String fileList: rmFileList) {
+            String file = URLDecoder.decode(fileList, StandardCharsets.UTF_8);
+            imageFileRepository.removeFile(file);
+        }
     }
 
     @Override

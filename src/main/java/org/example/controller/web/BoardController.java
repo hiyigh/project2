@@ -1,6 +1,7 @@
 package org.example.controller.web;
 
 import lombok.RequiredArgsConstructor;
+import org.example.config.oauth2.PrincipalDetails;
 import org.example.model.dto.UserDto;
 import org.example.model.dto.board.PostDto;
 import org.example.model.entity.User;
@@ -60,13 +61,13 @@ public class BoardController {
         model.addAttribute("postDto", postDto.get("postDto"));
         return "/board/edit";
     }
-    @PutMapping("/edit")
-    public ResponseEntity editPost(@RequestPart(value = "jsonData") PostDto.Write postDto,
+    @PutMapping("/edit/{postId}")
+    public ResponseEntity editPost(@PathVariable int postId,
+                                   @RequestPart(value = "jsonData") PostDto.Write postDto,
                                    @RequestPart(value= "plusImageFile")List<MultipartFile> postFile,
                                    @RequestPart(value = "removeImageFile")List<String> removeFile,
                                    @AuthenticationPrincipal PrincipalDetails principalDetails) {
-
-        postService.editPost(postDto, postFile, removeFile);
+        postService.editPost(postId ,postDto, postFile, removeFile);
         return ResponseEntity.status(HttpStatus.OK).body("ok");
     }
     @GetMapping("/post/{id}")

@@ -52,4 +52,9 @@ public class ImageFileRepository {
             return result;
         }
     }
+
+    public void removeFile(String filename) {
+        String sql = "delete from BoardImageFile where img_file_name like ?";
+        jdbcTemplate.update(sql, filename);
+    }
 }

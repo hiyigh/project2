@@ -11,7 +11,7 @@ import java.util.Map;
 public interface PostService {
     int savePost(int userId, PostDto.Write postDto, List<MultipartFile> imageList);
     void deletePost(int postId);
-    void editPost(PostDto.Write postDto);
+    void editPost(int postId,PostDto.Write postDto, List<MultipartFile> postFile, List<String> removeFile);
     List<PostDto.Load> getPostList(int postCategoryId);
     Map<String, Object> getPostByPostId(int post_id);
     Map<String, Object> getPostByKeyword(String keyword);

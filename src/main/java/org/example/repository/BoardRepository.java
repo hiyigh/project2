@@ -18,7 +18,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class BoardRepository {
     private final JdbcTemplate jdbcTemplate;
-
     public int savePost(Post post) {
         String sql="insert into Posts (post_category_id, post_writer, post_title, post_content, post_like, post_hits) " +
                 "values (?,?,?,?,?,?)";
@@ -33,9 +32,9 @@ public class BoardRepository {
         String sql ="delete Posts where post_id = ?";
         jdbcTemplate.update(sql, postId);
     }
-    public void editPost(Post post) {
+    public void editPost(int postId,PostDto.Write postDto) {
         String sql = "update Posts set post_category_id = ?, post_title = ?, post_content = ? where post_id = ?";
-        jdbcTemplate.update(sql, post.getPost_category_id(), post.getPost_title(), post.getPost_content(), post.getPost_id());
+        jdbcTemplate.update(sql, postDto.getPost_category_id(), postDto.getPost_title(), postDto.getPost_content(), postId);
     }
     public List<PostDto.Load> getPostList(int post_category_id) {
 
