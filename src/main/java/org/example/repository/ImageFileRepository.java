@@ -2,12 +2,10 @@ package org.example.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.example.model.entity.board.PostFile;
-import org.example.model.entity.shop.Item;
-import org.example.model.entity.shop.ItemFile;
+import org.example.model.entity.shop.ImageFile;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,7 @@ public class ImageFileRepository {
                 "values (?,?,?)";
         jdbcTemplate.update(sql, postFile.getPost_id(), postFile.getImg_file_path(), postFile.getImg_file_name());
     }
-    public void saveItemFile(ItemFile itemFile) {
+    public void saveItemFile(ImageFile itemFile) {
         String sql = "insert into ItemImageFile (item_id, img_filepath, img_filename) " +
                 "vales (?,?,?)";
         jdbcTemplate.update(sql, itemFile.getItem_id(), itemFile.getImg_filepath(), itemFile.getImg_filename());
@@ -39,16 +37,16 @@ public class ImageFileRepository {
             return result;
         }
     }
-    public List<ItemFile> getItemFileById(int itemId) {
+    public List<ImageFile> getItemFileById(int itemId) {
         String sql = null;
-        List<ItemFile> result = new ArrayList<>();
+        List<ImageFile> result = new ArrayList<>();
         if (itemId == -1) {
             sql = "select * from ItemImageFile";
-            result = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ItemFile.class));
+            result = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ImageFile.class));
             return result;
         } else {
             sql = "select * from ItemImageFile where item_id = ?";
-            result = jdbcTemplate.query(sql, new Object[]{itemId}, new BeanPropertyRowMapper<>(ItemFile.class));
+            result = jdbcTemplate.query(sql, new Object[]{itemId}, new BeanPropertyRowMapper<>(ImageFile.class));
             return result;
         }
     }

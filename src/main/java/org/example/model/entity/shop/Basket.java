@@ -2,15 +2,17 @@ package org.example.model.entity.shop;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.example.model.dto.shop.BasketDto;
 
 @Getter
 public class Basket {
-    private int basket_id;
-    private int user_id;
-    private int item_id;
+    private int basketId;
+    private String userName;
+    private int itemId;
     @Builder
-    public Basket(int user_id, int item_id) {
-        this.user_id = user_id;
-        this.item_id = item_id;
+    public Basket(String userName, int itemId) {
+        this.userName = userName;
+        this.itemId = itemId;
     }
+
 }

@@ -1,5 +1,5 @@
 package org.example.controller.web;
 
-public class ChatController
-{
+public class ChatController {
+
 }

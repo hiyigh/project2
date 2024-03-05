@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.model.dto.shop.ItemDto;
 import org.example.model.dto.shop.OrderDto;
 import org.example.model.entity.User;
-import org.example.model.entity.board.Comment;
-import org.example.model.entity.shop.Item;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.example.model.entity.shop.Comment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 

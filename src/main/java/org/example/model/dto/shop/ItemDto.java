@@ -2,30 +2,50 @@ package org.example.model.dto.shop;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.model.dto.UserDto;
+import org.example.model.entity.User;
 import org.example.model.entity.shop.Item;
+import org.example.model.entity.shop.ImageFile;
 
-@Getter
-@Setter
+import java.util.List;
 public class ItemDto {
-    private int item_id;
-    private int item_category_id;
-    private String item_title;
-    private String item_explain;
-    private int item_price;
-    private int item_stock;
-    private int item_hits;
-    private int item_discount;
-
-    public static ItemDto toDto(Item item) {
-        ItemDto itemDto = new ItemDto();
-        itemDto.setItem_id(item.getItem_id());
-        itemDto.setItem_category_id(item.getItem_category_id());
-        itemDto.setItem_title(item.getItem_title());
-        itemDto.setItem_explain(item.getItem_explain());
-        itemDto.setItem_price(item.getItem_price());
-        itemDto.setItem_stock(item.getItem_stock());
-        itemDto.setItem_hits(item.getItem_hits());
-        itemDto.setItem_discount(item.getItem_discount());
-        return itemDto;
+    @Getter
+    @Setter
+    public static class Request {
+        private int categoryId;
+        private String title;
+        private String explain;
+        private List<ImageFile> itemFileList;
+        private int price;
+        private int stock;
+        private int discount;
+    }
+    @Getter
+    @Setter
+    public static class Response {
+        private int itemId;
+        private String seller;
+        private String title;
+        private String explain;
+        private List<ImageFile> imageFiles;
+        private int price;
+        private int hits;
+        private int likes;
+        private int stock;
+        private int discount;
+    }
+    public static ItemDto.Response toItemDtoResponse(Item item,List<ImageFile> imageFiles) {
+        ItemDto.Response response = new Response();
+        response.itemId = item.getItemId();
+        response.seller = item.getSeller();
+        response.title = item.getTitle();
+        response.explain = item.getExplain();
+        response.imageFiles = imageFiles;
+        response.price = item.getPrice();
+        response.hits = item.getHits();
+        response.likes = item.getLikes();
+        response.stock = item.getStock();
+        response.discount = item.getDiscount();
+        return response;
     }
 }

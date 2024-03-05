@@ -2,7 +2,7 @@ package org.example.service.Impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.model.entity.board.PostFile;
-import org.example.model.entity.shop.ItemFile;
+import org.example.model.entity.shop.ImageFile;
 import org.example.repository.ImageFileRepository;
 import org.example.service.ImageFileService;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class ImageFileServiceImpl implements ImageFileService {
     }
 
     @Override
-    public void saveItemFile(ItemFile itemFile) {
+    public void saveItemFile(ImageFile itemFile) {
         imageFileRepository.saveItemFile(itemFile);
     }
 
@@ -29,7 +29,7 @@ public class ImageFileServiceImpl implements ImageFileService {
     }
 
     @Override
-    public List<ItemFile> getItemFileById(int itemId) {
+    public List<ImageFile> getItemFileById(int itemId) {
         return imageFileRepository.getItemFileById(itemId);
     }
 }

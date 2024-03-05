@@ -2,8 +2,7 @@ package org.example.service;
 
 import org.example.model.dto.UserDto;
 import org.example.model.entity.User;
-import org.example.model.entity.board.Comment;
-import org.example.model.entity.shop.Item;
+import org.example.model.entity.shop.Comment;
 
 import java.util.List;
 import java.util.Map;
