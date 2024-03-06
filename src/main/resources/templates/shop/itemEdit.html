@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko" xmlns:th="www.thymeleaf.org">
+<head>
+    <div th:replace="~{fragments/head.html::head}"></div>
+    <title>Edit</title>
+</head>
+<body>
+<header th:replace="~{fragments/header.html::header}"></header>
+<div class="container" th:with="baseUrl = ${httpServletRequest.requestURI}">
+    <form id="editForm">
+        <h1>수 정</h1>
+        <div class="row mt-3">
+            <div class="slider-container">
+                <input id="inputFile" type="file" accept="image/*" style="display:none;" multiple onchange="fileChange(event)"/>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <input id="title" name="title" class="form-control" type="text" placeholder="제목을 입력해주세요">
+        </div>
+        <div class="row mt-3">
+            <div class="col" style="max-width:6em;">
+                <label class="col-form-label">카테고리</label>
+            </div>
+            <div class="col">
+                <select id="category" name="category" class="form-select" >
+                    <option th:each="category : ${T(org.example.model.entity.util.Category.values()}"
+                            th:value="${category}" th:text="${category.value}">
+                    </option>
+                </select>
+                <div id="categoryValid" class="invalid-tooltip">Please choose a unique and valid username.</div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col"style="max-width:6em;">
+                <label class="col-form-label">가격</label>
+            </div>
+            <div class="col">
+                <input type="number" id="price" name="price" class="form-control" placeholder="100원이상 값 입력" min="100"/>
+                <div id="priceValid" class="invalid-tooltip"></div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <label class="col-form-label">재고</label>
+            </div>
+            <div class="col">
+                <input type="number" id="stock" name="stock" class="form-control" max="100">
+                <div id="numberValid" class="invalid-tooltip"></div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col">
+                <label class="form-label">설명</label>
+                <textarea id="explain" name="explain" class="form-control" placeholder="제품의 상세설명을 입력해주세요"></textarea>
+                <div id="explainValid" class="invalid-tooltip"></div>
+            </div>
+        </div>
+        <div class="text-end mt-3 mb-5">
+            <button class="mt-2 btn rounded-4 btn-primary" type="button" onclick="editFormSubmit">저장</button>
+        </div>
+    </form>
+<footer th:replace="~{fragments/footer.html::footer}"></footer>
+</div>
+
+<script src="/js/validutil.js"></script>
+<script src="/js/item/edit.js"></script>
+</body>
+</html>

@@ -14,22 +14,16 @@ public class ImageFileServiceImpl implements ImageFileService {
     private final ImageFileRepository imageFileRepository;
 
     @Override
-    public void savePostFile(PostFile postFile) {
-        imageFileRepository.savePostFile(postFile);
+    public void saveFile(ImageFile itemFile) {
+        imageFileRepository.saveFile(itemFile);
     }
-
-    @Override
-    public void saveItemFile(ImageFile itemFile) {
-        imageFileRepository.saveItemFile(itemFile);
-    }
-
-    @Override
-    public List<PostFile> getPostFileById(int postId) {
-        return imageFileRepository.getPostFileById(postId);
-    }
-
     @Override
     public List<ImageFile> getItemFileById(int itemId) {
         return imageFileRepository.getItemFileById(itemId);
+    }
+
+    @Override
+    public void removeFile(String filename) {
+        imageFileRepository.removeFile(filename);
     }
 }
