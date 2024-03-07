@@ -32,4 +32,17 @@ public class Item {
         this.likes = likes;
         this.discount = discount;
     }
+    public static Item toEntity(int itemId,ItemDto.Request request) {
+        Item item = new Item();
+        item.itemId = itemId;
+        item.categoryId = request.getCategoryId();
+        item.title = request.getTitle();
+        item.explain = request.getExplain();
+        item.price = request.getPrice();
+        item.stock = request.getStock();
+        item.hits = 0;
+        item.likes = 0;
+        item.discount = request.getDiscount();
+        return item;
+    }
 }

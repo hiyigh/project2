@@ -43,10 +43,10 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         User user = userRepository.getUserByEmail(email);
         if (user == null) {
             User newUser = User.builder()
-                    .user_email(email)
-                    .user_password(password)
-                    .user_name(tempName)
-                    .user_role(Role.USER)
+                    .email(email)
+                    .password(password)
+                    .name(tempName)
+                    .role(Role.USER)
                     .build();
             userRepository.save(newUser);
         }
