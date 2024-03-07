@@ -20,6 +20,7 @@ import java.util.Map;
 public class ItemApiController {
     private final ItemService itemService;
     private final ImageFileService imageFileService;
+
     @DeleteMapping("/delete/{itemId}")
     public ResponseEntity deleteItem(@PathVariable int itemId) {
         itemService.deleteItem(itemId);
