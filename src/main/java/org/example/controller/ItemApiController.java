@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,9 +44,10 @@ public class ItemApiController {
     @PutMapping("/edit/{itemId}")
     public ResponseEntity editItem(@PathVariable int itemId,
                                    @RequestPart(value = "itemRequest")ItemDto.Request itemDto,
-                                   @RequestPart(value = "itemImageFile") ImageFile itemFile) {
-        itemService.editItem(itemId, itemDto);
-        imageFileService.saveItemFile(itemFile);
+                                   @RequestPart(value = "plusFile") List<MultipartFile> plusFile,
+                                   @RequestPart(value = "removeFile")List<String> rmFile,
+                                   @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        itemService.editItem(itemId, itemDto, plusFile, rmFile, principalDetails);
         return ResponseEntity.status(HttpStatus.OK).body("ok");
     }
 

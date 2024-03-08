@@ -8,19 +8,10 @@
 <body>
 <header th:replace="~{/fragments/header.html::header}"></header>
 <main>
-    <section class="home-img-slide">
-        <ul>
-            <li class="home-img-list" th:each="image : ${homeImage}">
-<!--                <img class="home-img" th:src="${image.imageUrl}">-->
-            </li>
-        </ul>
-        <div class="home-img-btn">
-            <button id="home-img-btn-next"> < </button>
-            <button id="home-img-btn-prev"> > </button>
-        </div>
-    </section>
+    <section th:replace="~{fragments/slide.html::slide}"></section>
 </main>
 <footer th:replace="~{/fragments/footer.html::footer}"></footer>
 <script type="text/javascript" th:src="@{/js/home.js}"></script>
+<script src="/js/slider.js"></script>
 </body>
 </html>
