@@ -8,7 +8,14 @@
 <body>
 <header th:replace="~{/fragments/header.html::header}"></header>
 <main>
-    <section th:replace="~{fragments/slide.html::slide}"></section>
+    <div class="main_slide">
+        <section th:replace="~{fragments/slide.html::slide}"></section>
+    </div>
+    <div class="sub_slide">
+        <section th:replace="~{fragments/slide.html::slide}"></section>
+        <section th:replace="~{fragments/slide.html::slide}"></section>
+        <section th:replace="~{fragments/slide.html::slide}"></section>
+    </div>
 </main>
 <footer th:replace="~{/fragments/footer.html::footer}"></footer>
 <script type="text/javascript" th:src="@{/js/home.js}"></script>

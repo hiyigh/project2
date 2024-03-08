@@ -26,12 +26,12 @@ public class ItemApiController {
     private final ImageFileService imageFileService;
 
     @DeleteMapping("/delete/{itemId}")
-    public ResponseEntity deleteItem(@PathVariable int itemId , @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public ResponseEntity<?> deleteItem(@PathVariable int itemId , @AuthenticationPrincipal PrincipalDetails principalDetails) {
         itemService.deleteItem(itemId, principalDetails);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
     @GetMapping("/detail/{itemId}")
-    public ResponseEntity detailItem(@PathVariable int itemId) {
+    public ResponseEntity<?> detailItem(@PathVariable int itemId) {
         Map<String, Object> response = new HashMap<>();
 
         Item item =  itemService.getItemById(itemId);
@@ -42,7 +42,7 @@ public class ItemApiController {
         return ResponseEntity.ok(response);
     }
     @PutMapping("/edit/{itemId}")
-    public ResponseEntity editItem(@PathVariable int itemId,
+    public ResponseEntity<?> editItem(@PathVariable int itemId,
                                    @RequestPart(value = "itemRequest")ItemDto.Request itemDto,
                                    @RequestPart(value = "plusFile") List<MultipartFile> plusFile,
                                    @RequestPart(value = "removeFile")List<String> rmFile,
