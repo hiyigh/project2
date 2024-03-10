@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<main>
+    <section th:fragment="slide_main">
+        <ul class="slider_wrap_main">
+            <li class="slider_img_main" th:each="image : ${imageFile}">
+                <div class="slider_main"><img src="${image.path}" alt="image"></div>
+            </li>
+        </ul>
+    </section>
+    <section th:fragment="slide_sub">
+        <ul class="slider_wrap_sub">
+            <li class="slider_img_sub" th:each="image : ${imageFile}">
+                <div class="slider_sub"><img src="${image.path}" alt="image"></div>
+            </li>
+        </ul>
+    </section>
+</main>
+</body>
+</html>
