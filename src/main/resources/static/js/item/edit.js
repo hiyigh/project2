@@ -23,7 +23,9 @@ function loadData(data) {
     let itemFile = data.itemFile;
     document.querySelector("#title").value = item.title;
     document.querySelectorAll("#category option").forEach(function(option){
-        if(option.innerHTML == item.category)
+        if(option.innerHTML == item.category){
+            option.selected =true;
+        }
     });
     document.querySelector("#explain").value = item.explain;
 

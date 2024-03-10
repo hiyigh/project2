@@ -20,8 +20,8 @@ public class UserRepository {
     public void save(User user) {
         String sql = "insert into Users (user_name, user_password, user_img, user_role) " +
                 "values(?,?,?,?)";
-        jdbcTemplate.update(sql, user.getUser_name(), user.getUser_password(),
-                user.getUser_img(), user.getUser_role().toString());
+        jdbcTemplate.update(sql, user.getName(), user.getPassword(),
+                user.getUserImage(), user.getRole());
     }
     public void delete(int user_id) {
         String sql = "delete from Users where user_id = ?";
@@ -29,8 +29,8 @@ public class UserRepository {
     }
     public void edit(User user) {
         String sql = "update Users set user_name = ? , user_password = ? , user_img = ? where user_id = ? ";
-        jdbcTemplate.update(sql, user.getUser_name(), user.getUser_password(),
-                user.getUser_img(), user.getUser_id());
+        jdbcTemplate.update(sql, user.getName(), user.getPassword(),
+                user.getUserImage(), user.getUserId());
 
     }
     public User getUserById(int userId) {
@@ -86,21 +86,22 @@ public class UserRepository {
     private Map<String, Object> mappingItemList(List<Map<String, Object>> rows, int type) {
         Map<String, Object> result = new HashMap<>();
         List<String> filePathList =  new ArrayList<>();
-        List<ItemDto> itemList = new ArrayList<>();
+        List<ItemDto.Response> itemList = new ArrayList<>();
         List<OrderDto> orderList = new ArrayList<>();
         OrderDto orderDto = new OrderDto();
-        ItemDto itemDto = new ItemDto();
+        ItemDto.Response itemDto = new ItemDto.Response();
         if (type == 0) {
             for (int i = 0; i < rows.size(); ++i) {
                 if (itemDto == null) {
-                    itemDto.setItem_id((int)rows.get(i).get("item_id"));
-                    itemDto.setItem_category_id((int)rows.get(i).get("item_category_id"));
-                    itemDto.setItem_title((String) rows.get(i).get("item_title"));
-                    itemDto.setItem_explain((String) rows.get(i).get("item_explain"));
-                    itemDto.setItem_price((int) rows.get(i).get("item_price"));
-                    itemDto.setItem_hits((int) rows.get(i).get("item_hits"));
-                    itemDto.setItem_stock((int) rows.get(i).get("item_stock"));
-                    itemDto.setItem_discount((int) rows.get(i).get("item_discount"));
+                    itemDto.setItemId((int)rows.get(i).get("id"));
+                    itemDto.setSeller((String)rows.get(i).get("seller"));
+                    itemDto.setTitle((String) rows.get(i).get("title"));
+                    itemDto.setExplain((String) rows.get(i).get("explain"));
+                    itemDto.setPrice((int) rows.get(i).get("price"));
+                    itemDto.setHits((int) rows.get(i).get("hits"));
+                    itemDto.setStock((int) rows.get(i).get("stock"));
+                    itemDto.setLikes((int)rows.get(i).get("likes"));
+                    itemDto.setDiscount((int) rows.get(i).get("discount"));
                     itemList.add(itemDto);
                     itemDto = null;
                 }

@@ -1,7 +1,6 @@
 package org.example.service.Impl;
 
 import lombok.RequiredArgsConstructor;
-import org.example.model.entity.board.PostFile;
 import org.example.model.entity.shop.ImageFile;
 import org.example.repository.ImageFileRepository;
 import org.example.service.ImageFileService;

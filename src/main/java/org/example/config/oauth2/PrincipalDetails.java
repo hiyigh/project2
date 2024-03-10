@@ -28,7 +28,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         collect.add(new GrantedAuthority() {
             @Override
             public String getAuthority() {
-                return user.getUser_role().toString();
+                return user.getRole();
             }
         });
         return null;
@@ -52,7 +52,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
     @Override
     public String getPassword() {
-        return user.getUser_password();
+        return user.getPassword();
     }
     /**
      * UserDetails 구현
@@ -60,7 +60,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
      */
     @Override
     public String getUsername() {
-        return user.getUser_email();
+        return user.getEmail();
     }
 
     @Override
