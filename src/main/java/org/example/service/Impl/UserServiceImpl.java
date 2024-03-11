@@ -2,8 +2,10 @@ package org.example.service.Impl;
 
 import lombok.RequiredArgsConstructor;
 import org.example.model.dto.UserDto;
+import org.example.model.dto.shop.ImageFileDto;
 import org.example.model.entity.User;
 import org.example.model.entity.shop.Comment;
+import org.example.repository.ImageFileRepository;
 import org.example.repository.UserRepository;
 import org.example.service.UserService;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private final ImageFileRepository imageFileRepository;
     @Override
     public void save(User user) {
         userRepository.save(user);
@@ -30,14 +33,10 @@ public class UserServiceImpl implements UserService {
         userRepository.edit(user);
     }
     @Override
-    public UserDto getUserById(int userId) {
+    public UserDto.Response getUserById(int userId) {
         User user = userRepository.getUserById(userId);
-        UserDto userDto = UserDto.builder()
-                .user_id(user.getUser_id())
-                .user_name(user.getUser_name())
-                .user_img(user.getUser_img())
-                .role(user.getUser_role())
-                .build();
+        ImageFileDto.Response imageFile = imageFileRepository.getUserImageByUserId(user.getUserId());
+        UserDto.Response userDto = UserDto.toUserDtoResponse(user, imageFile);
         return userDto;
     }
 

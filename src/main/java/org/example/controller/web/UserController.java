@@ -1,5 +1,6 @@
 package org.example.controller.web;
 
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.core.AuthenticatedPrincipal;
 import org.springframework.stereotype.Controller;

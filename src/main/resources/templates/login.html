@@ -1,47 +1,36 @@
 <!doctype html>
 <html lang="ko" xmlns:th="www.thymeleaf.org">
 <head>
-    <div th:replace="~{fragments/head.html::head}"></div>
-    <title>Login</title>
+    <div th:replace="~{fragments/head.html::meta}"></div>
+<!--    <script type="application/json" src="test.js"></script>-->
 </head>
 <body>
     <header th:replace="~{fragments/header.html::header}"></header>
     <main>
-        <section class="login-info" style="text-align:center;">
+        <section class="login_info" style="text-align:center;">
+            <h2>Login</h2>
             <form action="/loginProcessing" method="post">
-                <h2>로그인</h2><br>
-                <div style="margin-bottom:100px;">
-                    <input id="login-email" name="userEmail" type="email" placeholder="아이디" aria-describedby="wrong-email"/>
+                <div class="mb-3">
+                    <input class="email" id="userEmail" name="userEmail" type="email" placeholder="enter email"/>
+                </div>
+                <div class="mb-3">
+                    <input class="password" id="userPassword" name="userPassword" type="password" placeholder="enter password"/>
                 </div>
                 <div>
-                    <input id="login-password" name="userPassword" type="password" placeholder="비밀번호" aria-describedby="wrong-password"/>
-                </div>
-                <div class="login-buttons">
-                    <button class="btn login-btn" type="submit">로그인</button>
-                    <button class="btn login-btn" href="/join">회원가입</button>
-                </div>
-                <div class="find-password">
-                    <a href="/findPassword">비밀번호 찾기</a>
+                    <a href="/user/findPassword">find password</a>
                 </div>
                 <div>
-                    <p>다른 계정으로 로그인</p>
-                </div>
-
-                <div class="login-api">
-                    <a href="/oauth2/authorization/google">
-                        <button type="button" class="btn" id="google-login">Google</button>
-                    </a>
+                    <button type="submit">login</button>
+                    <button type="button" onclick="join()">join</button>
                 </div>
             </form>
         </section>
     </main>
     <footer th:replace="~{fragments/footer.html::footer}"></footer>
-<script>
-    $('#login-email, #login-password').on('keyup change',function(this){
-        let str = this.val().replace(/\s/g,'');
-        $(this).val(str);
-    });
-
-</script>
+    <script>
+        function join() {
+            window.location.href="/join";
+        }
+    </script>
 </body>
 </html>

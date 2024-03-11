@@ -2,6 +2,7 @@ package org.example.model.dto;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.model.dto.shop.ImageFileDto;
 import org.example.model.entity.User;
 import org.example.model.entity.shop.ImageFile;
 
@@ -19,10 +20,10 @@ public class UserDto {
         private String name;
         private String email;
         private String role;
-        private ImageFile imageFile;
+        private ImageFileDto.Response imageFile;
     }
 
-    public static UserDto.Response toUserDtoResponse(User user, ImageFile imageFile) {
+    public static UserDto.Response toUserDtoResponse(User user, ImageFileDto.Response imageFile) {
         UserDto.Response response = new Response();
         response.userId = user.getUserId();
         response.name = user.getName();

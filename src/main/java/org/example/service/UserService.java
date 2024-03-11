@@ -11,7 +11,7 @@ public interface UserService {
     void save(User user);
     void delete(int userId);
     void edit (User user);
-    UserDto getUserById(int userId);
+    UserDto.Response getUserById(int userId);
     User getUserByUserName(String userName);
     User getUserByEmail(String email);
     Map<String, Object> getUserPostList(int userId);

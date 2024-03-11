@@ -113,24 +113,19 @@ public class UserRepository {
         } else {
             for (int i = 0; i < rows.size(); ++i) {
                 if (itemDto == null) {
-                    itemDto.setItem_id((int)rows.get(i).get("item_id"));
-                    itemDto.setItem_category_id((int)rows.get(i).get("item_category_id"));
-                    itemDto.setItem_title((String) rows.get(i).get("item_title"));
-                    itemDto.setItem_explain((String) rows.get(i).get("item_explain"));
-                    itemDto.setItem_price((int) rows.get(i).get("item_price"));
-                    itemDto.setItem_hits((int) rows.get(i).get("item_hits"));
-                    itemDto.setItem_stock((int) rows.get(i).get("item_stock"));
-                    itemDto.setItem_discount((int) rows.get(i).get("item_discount"));
+                    itemDto.setItemId((int)rows.get(i).get("id"));
+                    itemDto.setSeller((String)rows.get(i).get("seller"));
+                    itemDto.setTitle((String) rows.get(i).get("title"));
+                    itemDto.setExplain((String) rows.get(i).get("explain"));
+                    itemDto.setPrice((int) rows.get(i).get("price"));
+                    itemDto.setHits((int) rows.get(i).get("hits"));
+                    itemDto.setStock((int) rows.get(i).get("stock"));
+                    itemDto.setLikes((int)rows.get(i).get("likes"));
+                    itemDto.setDiscount((int) rows.get(i).get("discount"));
                     itemList.add(itemDto);
 
                     itemDto = null;
                 } else if (orderDto == null) {
-                    orderDto.setOrder_id((int)rows.get(i).get("order_id"));
-                    orderDto.setUser_id((int)rows.get(i).get("user_id"));
-                    orderDto.setItem_id((int)rows.get(i).get("item_id"));
-                    orderDto.setAmount((int)rows.get(i).get("amount"));
-                    orderDto.setAddress((String)rows.get(i).get("address"));
-                    orderDto.setPayment((String)rows.get(i).get("payment"));
                     orderList.add(orderDto);
 
                     orderDto = null;

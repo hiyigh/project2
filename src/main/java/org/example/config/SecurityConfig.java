@@ -1,9 +1,6 @@
 package org.example.config;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.example.config.oauth2.FormLoginFailureHandler;
-import org.example.service.PrincipalOauth2UserService;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +17,7 @@ public class SecurityConfig {
         http.csrf(c->c.disable());
 
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/").permitAll())
+                .requestMatchers("/**").permitAll())
                 .formLogin(formLogin -> formLogin.loginPage("/login")
                         .loginProcessingUrl("/loginProcessing")
                         .usernameParameter("userEmail")

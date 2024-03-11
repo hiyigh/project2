@@ -1,24 +1,14 @@
 <!doctype html>
-<html lang="ko" xmlns:th="www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<html lang="ko" xmlns:th="www.thymeleaf.org">
 <head>
-    <div th:replace="~{fragments/head.html::head}"></div>
+    <div th:replace="~{fragments/head.html::meta}"></div>
     <title>Home</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
 </head>
 <body>
-<header th:replace="~{/fragments/header.html::header}"></header>
-<main>
-    <div class="main_slide">
-        <section th:replace="~{fragments/slide.html::slide}"></section>
-    </div>
-    <div class="sub_slide">
-        <section th:replace="~{fragments/slide.html::slide}"></section>
-        <section th:replace="~{fragments/slide.html::slide}"></section>
-        <section th:replace="~{fragments/slide.html::slide}"></section>
-    </div>
-</main>
-<footer th:replace="~{/fragments/footer.html::footer}"></footer>
-<script type="text/javascript" th:src="@{/js/home.js}"></script>
-<script src="/js/slider.js"></script>
+<header th:replace="~{fragments/header.html::header}"></header>
+    <section>
+        <p>Home</p>
+    </section>
+<footer th:replace="~{fragments/footer.html::footer}"></footer>
 </body>
 </html>
