@@ -152,4 +152,8 @@ public class UserRepository {
     }
 
 
+    public void setBasket(int itemId, String userName) {
+        String sql = "insert into Basket (userName, itemId) values (?,?)";
+        jdbcTemplate.update(sql, userName, itemId);
+    }
 }

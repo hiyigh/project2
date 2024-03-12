@@ -7,6 +7,7 @@ import org.example.model.entity.User;
 import org.example.model.entity.shop.Item;
 import org.example.model.entity.shop.ImageFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
 public class ItemDto {
     @Getter
@@ -27,14 +28,15 @@ public class ItemDto {
         private String seller;
         private String title;
         private String explain;
-        private List<ImageFile> imageFiles;
+        private List<ImageFileDto.Response> imageFiles;
         private int price;
         private int hits;
         private int likes;
         private int stock;
         private int discount;
+        private String createdAt;
     }
-    public static ItemDto.Response toItemDtoResponse(Item item,List<ImageFile> imageFiles) {
+    public static ItemDto.Response toItemDtoResponse(Item item,List<ImageFileDto.Response> imageFiles) {
         ItemDto.Response response = new Response();
         response.itemId = item.getItemId();
         response.seller = item.getSeller();

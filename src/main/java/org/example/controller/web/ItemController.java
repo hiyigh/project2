@@ -22,6 +22,10 @@ public class ItemController {
     public String detailItem() {
         return "/shop/itemDetail";
     }
+    @GetMapping("/purchase/{itemId}")
+    public String purchaseItem() {
+        return "/shop/order";
+    }
 
     @GetMapping(value = {"/list", "/list/{category}"})
     public String getListItem(@PathVariable(required = false) int categoryId) {

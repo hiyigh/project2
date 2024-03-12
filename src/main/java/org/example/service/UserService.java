@@ -20,4 +20,6 @@ public interface UserService {
     Map<String, Object> getUserPurchaseList(int userId);
 
     int getUserIdByEmail(String name);
+
+    void setBasket(int itemIdm, String userName);
 }

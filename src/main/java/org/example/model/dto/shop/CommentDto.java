@@ -17,6 +17,7 @@ public class CommentDto {
         private int parentId;
     }
     @Getter
+    @Setter
     public static class Response {
         private int commentId;
         private int itemId;

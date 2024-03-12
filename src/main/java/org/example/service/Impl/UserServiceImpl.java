@@ -74,4 +74,9 @@ public class UserServiceImpl implements UserService {
     public int getUserIdByEmail(String email) {
         return userRepository.getUserIdByEmail(email);
     }
+
+    @Override
+    public void setBasket(int itemId, String userName) {
+        userRepository.setBasket(itemId, userName);
+    }
 }

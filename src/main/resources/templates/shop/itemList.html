@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ko" xmlns:th="www.thymeleaf.org">
+<head>
+    <div th:replace="~{fragments/head.html::meta}"></div>
+    <title>Document</title>
+    <style>
+        .main {
+            margin-top:30%;
+            margin-left:25;
+        }
+        .tableRow {
+            text-align:center;
+        }
+        .no {
+            text-align:center;
+            width:50px;
+        }
+        .title {
+            text-align:center;
+            width:100px;
+        }
+        .explain {
+            text-align:center;
+            width:200px;
+        }
+        .seller {
+            text-align:center;
+            width:50px;
+        }
+        .date {
+            text-align:center;
+            width:200px;
+        }
+
+    </style>
+</head>
+<body>
+<header th:replace="~{fragments/header.html::header}"></header>
+<main class="main">
+    <table class="tableClass">
+        <tr class="tableRow">
+            <th class="no" onclick="sortByNum()">번호</th>
+            <th class="title">제목</th>
+            <th class="explain">내용</th>
+            <th class="seller">판매자</th>
+            <th class="date">등록일</th>
+        </tr>
+    </table>
+</main>
+<footer th:replace="~{fragments/footer.html::footer}"></footer>
+</body>
+<script>
+
+    function replaceData(response){
+        let elementsToRemove = document.querySelectorAll('.newRow');
+        elementsToRemove.forEach(function(element) {
+            element.remove();
+        });
+
+        let tableClass = document.querySelector('.tableClass');
+
+        response.forEach(function(item) {
+            let tableRow = document.createElement('tr');
+            tableRow.classList.add("newRow");
+
+            tableRow.addEventListener('click',function(event){
+                let itemId = this.querySelector('.no').textContent;
+                location.href = '/shop/detail/' + itemId;
+            });
+
+            let newNo = document.createElement('td');
+            newNo.classList.add("no");
+
+            let newTitle = document.createElement('td');
+            newTitle.classList.add("title");
+
+            let newContent = document.createElement('td');
+            newContent.classList.add("explain");
+
+            let newSeller = document.createElement('td');
+            newSeller.classList.add("seller");
+
+            let newTime = document.createElement('td');
+            newTime.classList.add("date");
+
+            newNo.textContent = item.itemId;
+            newTitle.textContent = item.title;
+            newContent.textContent = item.explain;
+            newSeller.textContent = item.seller;
+            newTime.textContent = item.createdAt;
+
+            tableRow.appendChild(newNo);
+            tableRow.appendChild(newTitle);
+            tableRow.appendChild(newContent);
+            tableRow.appendChild(newSeller);
+            tableRow.appendChild(newTime);
+
+            tableClass.appendChild(tableRow);
+        });
+
+    }
+    let check = false;
+    function sortByNum() {
+        check = !check;
+        let orderType;
+        if (check) {
+            orderType = 0; // up
+        } else {
+            orderType = 1; // down
+        }
+        $.ajax({
+            type:'get',
+            url:'/shop/api/item/list/byNo/' + orderType,
+            success:function(response) {
+                console.log("success");
+                replaceData(response);
+            },
+            error:function(error) {
+                alert("error", error);
+            }
+        });
+    }
+</script>
+</html>

@@ -16,4 +16,8 @@ public class MainController {
     public String Home() {
         return "/home";
     }
+    @GetMapping("/shop")
+    public String Shop() {
+        return "/shop/itemList";
+    }
 }

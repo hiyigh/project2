@@ -1,10 +1,198 @@
 <!doctype html>
 <html lang="ko" xmlns:th="www.thymeleaf.org">
 <head>
-    <div th:replace="~{fragments/head.html::head}"></div>
-    <title>Edit</title>
-</head
-<body>
+    <div th:replace="~{fragments/head.html::meta}"></div>
+    <title>ItemDetail</title>
+    <style>
+        .mainBox{
+            top:20%;
+            left:25%;
+        }
+        .imgSection{
 
+        }
+        .metaData{
+        }
+        .info{
+        }
+    </style>
+</head>
+
+<body>
+<header th:replace="~{fragments/header.html::header}"></header>
+<main>
+    <section class="mainBox">
+    <section class="imgSection">
+        <ul class="imgList">
+        </ul>
+    </section>
+    <section class="metaData">
+        <div class="like">
+            <label>좋아요</label>
+        </div>
+        <div class="hits">
+            <label>조회수</label>
+        </div>
+        <div class="basket"></div>
+        <div class="purchase"></div>
+    </section>
+    <section class="info">
+        <div class="title">
+            <label>제목</label>
+        </div>
+        <div class="explain">
+            <label>설명</label>
+        </div>
+    </section>
+    <section class="commentBox">
+        <div class="commentList"></div>
+    </section>
+    </section>
+</main>
+<footer th:replace="~{fragments/footer.html::footer}"></footer>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded',function(){
+        console.log('loadItem');
+        loadItem();
+        loadComments();
+    });
+    function gotoBasket() {
+        let curUrl = location.href;
+        let splitUrl = curUrl.split('/');
+        let itemId = splitUrl[splitUrl.length - 1];
+
+        $.ajax({
+            type:'get',
+            url:'/shop/api/item/basket' + itemId,
+            success:function(){
+                console.log("success to go to basket");
+            },
+            error:function(){
+                alert('fail to go to basket');
+            }
+        });
+    }
+    function gotoPurchase() {
+        let curUrl = location.href;
+        let splitUrl = curUrl.split('/');
+        let itemId = splitUrl[splitUrl.length - 1];
+
+        location.href='/shop/order/' + itemId;
+    }
+    function updateItemData(data){
+
+        data.forEach(function(item) {
+
+            let imgList = document.querySelector('.imgList');
+
+            let like = document.querySelector('.like');
+            let hits = document.querySelector('.hits');
+            let title = document.querySelector('.title');
+            let explain = document.querySelector('.explain');
+
+            let basket = document.querySelector('.basket');
+            let purchase = document.querySelector('.purchase');
+
+            item.imageFiles.forEach(function(imageFile){
+                let newList = document.createElement('li');
+                let newImg = document.createElement('img');
+                newImg.setAttribute('src', imageFile.filepath);
+                newImg.setAttribute('width', '20%'); // 너비를 100px로 설정
+                newImg.setAttribute('height', '20%'); // 높이를 100px로 설정
+                newImg.setAttribute('alt', "img filepath load fail");
+                newList.appendChild(newImg);
+                imgList.appendChild(newList);
+            });
+
+
+            let newLike = document.createElement('span');
+            newLike.textContent = item.likes;
+
+            let newHits = document.createElement('span');
+            newHits.textContent = item.hits;
+
+            let newBasket = document.createElement('button');
+            newBasket.textContent = "장바구니";
+            newBasket.onclick = gotoBasket;
+
+            let newPurchase = document.createElement('button');
+            newPurchase.textContent = "구매";
+            newPurchase.onclick = gotoPurchase;
+
+            let newTitle = document.createElement('span');
+            newTitle.textContent = item.title;
+
+            let newExplain = document.createElement('span');
+            newExplain.classList.add("explain");
+
+            like.appendChild(newLike);
+            hits.appendChild(newHits);
+
+            title.appendChild(newTitle);
+            explain.appendChild(newExplain);
+
+            basket.appendChild(newBasket);
+            purchase.appendChild(newPurchase);
+        });
+
+    }
+    function updateComments(data) {
+        let commentList = document.querySelector('.commentList');
+
+        data.forEach(function(comment){
+            let c = document.createElement('div');
+            c.classList.add("c" + comment.commentId);
+
+            if (comment.viewStatus == true) {
+                c.innerHTML = `<span>삭제된 댓글</span>`;
+                commentList.appendChild(c);
+            }
+<!--자식 댓글의 경우 append 위치가 다르게?-->
+            if (comment.parentId != -1) {
+                let parent = document.querySelector('.c'+comment.parentId);
+                c.
+                parent.append()
+            }
+        });
+
+    }
+
+    function loadItem() {
+        let currentUrl = location.href;
+        let splitUrl = currentUrl.split('/');
+        let itemId = splitUrl[splitUrl.length-1];
+        itemId = parseInt(itemId);
+
+        $.ajax({
+            type:'get',
+            url:'/shop/api/detail/' + itemId,
+            success:function(response){
+                console.log("success");
+                updateItemData(response);
+            },
+            error:function(){
+                alert("error", error)
+            }
+        });
+    }
+    function loadComments(){
+        let currentUrl = location.href;
+        let splitUrl = currentUrl.split('/');
+        let itemId = splitUrl[splitUrl.length-1];
+        itemId = parseInt(itemId);
+
+        $.ajax({
+            type:'get',
+            url:'/shop/api/comments/' + itemId,
+            success:function(response){
+                console.log("success");
+                updateComments(response);
+            },
+            error:function(){
+                alert("error", error)
+            }
+        });
+    }
+</script>
 </html>
