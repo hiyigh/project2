@@ -9,6 +9,59 @@
     <section>
         <p>Home</p>
     </section>
+    <section>
+        <div id="imageShow">
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            <div class="button">
+                <label for="chooseFile">
+                    Click Here
+                </label>
+                <input type="file" id="chooseFile" name="chooseFile" multiple accept="image/*" onchange="loadFile(this)" />
+            </div>
+            <div class="fileContainer">
+
+                <div class="fileInput">
+                    <p>FILE NAME: </p>
+                    <p id="fileName"></p>
+                </div>
+
+                <div class="buttonContainer">
+                    <div class="submitButton" id="submitButton">SUBMIT</div>
+                </div>
+
+            </div>
+
+        </form>
+    </section>
 <footer th:replace="~{fragments/footer.html::footer}"></footer>
 </body>
+<script>
+    function loadFile(input){
+        let fileList = input.files;
+        let fileLength = fileList.length;
+
+        let fileName = document.querySelector('#fileName');
+
+        let fileNameElement = document.getElementById('fileName');
+        fileNameElement.innerText = ""; // 파일 이름 초기화
+
+        let imageShow = document.querySelector('#imageShow');
+        imageShowElement.innerHTML = ""; // 이미지 보여주는 요소 초기화
+
+        for (iet i = 0; i < fileLength; ++i) {
+            fileName.innerText += `${fileList[i].name}\t`;
+        }
+
+        for (iet i = 0; i < fileLength; ++i) {
+            let newImage = document.createElement("img");
+            newImage.setAttribute("class", "img");
+
+            newImage.src = URL.createObjectURL(fileList[i]);
+            imageShow.appendChild(newImage);
+        }
+
+    }
+</script>
 </html>
