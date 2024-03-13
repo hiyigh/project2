@@ -9,25 +9,25 @@ public class AddressDto {
     @Setter
     public static class Request {
         private String postcode;
-        private String defaultAddress;
+        private String roadAddress;
+        private String jibunAddress;
         private String detailAddress;
-        private String extraAddress;
     }
     @Getter
     public static class Response {
         private int addressId;
         private String postcode;
-        private String defaultAddress;
+        private String roadAddress;
+        private String jibunAddress;
         private String detailAddress;
-        private String extraAddress;
     }
     public static AddressDto.Response toAddressDtoResponse(Address address) {
         AddressDto.Response response = new Response();
         response.addressId = address.getAddressId();
         response.postcode = address.getPostcode();
-        response.defaultAddress = address.getDefaultAddress();
-        response.detailAddress = address.getDefaultAddress();
-        response.extraAddress = address.getExtraAddress();
+        response.roadAddress = address.getDefaultAddress();
+        response.jibunAddress = address.getDefaultAddress();
+        response.detailAddress = address.getExtraAddress();
         return response;
     }
 }

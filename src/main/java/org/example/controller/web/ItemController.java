@@ -26,7 +26,10 @@ public class ItemController {
     public String purchaseItem() {
         return "/shop/order";
     }
-
+    @GetMapping("/postcode")
+    public String searchPostCode() {
+        return "/shop/postcode";
+    }
     @GetMapping(value = {"/list", "/list/{category}"})
     public String getListItem(@PathVariable(required = false) int categoryId) {
         if (categoryId == 0) {

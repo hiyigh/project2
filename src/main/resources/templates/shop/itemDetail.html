@@ -45,7 +45,8 @@
         </div>
     </section>
     <section class="commentBox">
-        <div class="commentList"></div>
+        <div class="commentList">
+        </div>
     </section>
     </section>
 </main>
@@ -53,7 +54,6 @@
 </body>
 <script>
     document.addEventListener('DOMContentLoaded',function(){
-        console.log('loadItem');
         loadItem();
         loadComments();
     });
@@ -61,12 +61,16 @@
         let curUrl = location.href;
         let splitUrl = curUrl.split('/');
         let itemId = splitUrl[splitUrl.length - 1];
+console.log(typeof itemId);
+        let id = parseInt(itemId);
+console.log(typeof id);
 
         $.ajax({
             type:'get',
-            url:'/shop/api/item/basket' + itemId,
+            url:'/shop/api/item/basket/' + id,
             success:function(){
                 console.log("success to go to basket");
+                location.href='/shop/postcode';
             },
             error:function(){
                 alert('fail to go to basket');
@@ -149,13 +153,21 @@
                 commentList.appendChild(c);
             }
 <!--자식 댓글의 경우 append 위치가 다르게?-->
-            if (comment.parentId != -1) {
-                let parent = document.querySelector('.c'+comment.parentId);
-                c.
-                parent.append()
+            if (comment.depth != 0) {
+                let p = document.querySelector('.c'+comment.parentId);
+
+                let cc = document.createElement('div');
+                cc.classList.add("c"+comment.commentId);
+                let depth = comment.depth;
+                cc.setAttribute('style', 'margin-left: ' + (40 * depth) + 'px');
+                cc.textContent = comment.comment;
+                p.appendChild(cc);
+            } else {
+
+                c.textContent = comment.comment;
+                commentList.appendChild(c);
             }
         });
-
     }
 
     function loadItem() {
@@ -168,7 +180,7 @@
             type:'get',
             url:'/shop/api/detail/' + itemId,
             success:function(response){
-                console.log("success");
+                console.log("get items success");
                 updateItemData(response);
             },
             error:function(){
@@ -186,7 +198,7 @@
             type:'get',
             url:'/shop/api/comments/' + itemId,
             success:function(response){
-                console.log("success");
+                console.log("get comments success");
                 updateComments(response);
             },
             error:function(){

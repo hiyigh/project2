@@ -3,6 +3,7 @@ package org.example.controller;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.authenticator.SpnegoAuthenticator;
 import org.example.config.oauth2.PrincipalDetails;
+import org.example.model.dto.shop.AddressDto;
 import org.example.model.dto.shop.CommentDto;
 import org.example.model.dto.shop.ImageFileDto;
 import org.example.model.dto.shop.ItemDto;
@@ -29,9 +30,10 @@ public class ItemApiController {
     private final ItemService itemService;
     private final UserService userService;
     private final ImageFileService imageFileService;
+
     public List<ItemDto.Response> makeTestCase() {
         List<ItemDto.Response> testList = new ArrayList<>();
-        for (int i =0; i < 10; ++i) {
+        for (int i = 0; i < 10; ++i) {
             ItemDto.Response response = new ItemDto.Response();
             LocalDateTime n = LocalDateTime.now();
 
@@ -48,6 +50,7 @@ public class ItemApiController {
         }
         return testList;
     }
+
     @GetMapping("/item/list/byNo/{orderType}")
     public ResponseEntity<?> getListOrderByNo(@PathVariable(value = "orderType") int orderType) {
         List<ItemDto.Response> testList = new ArrayList<>();
@@ -61,18 +64,19 @@ public class ItemApiController {
     }
 
     @DeleteMapping("/delete/{itemId}")
-    public ResponseEntity<?> deleteItem(@PathVariable int itemId , @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public ResponseEntity<?> deleteItem(@PathVariable int itemId, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         itemService.deleteItem(itemId, principalDetails);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
+
     @GetMapping("/detail/{itemId}")
-    public ResponseEntity<?> detailItem(@PathVariable(value="itemId") int itemId) {
+    public ResponseEntity<?> detailItem(@PathVariable(value = "itemId") int itemId) {
 
         List<ItemDto.Response> testList = new ArrayList<>();
         ItemDto.Response testResponse = new ItemDto.Response();
 
         List<ImageFileDto.Response> testImgList = new ArrayList<>();
-        ImageFileDto.Response testImg  = new ImageFileDto.Response();
+        ImageFileDto.Response testImg = new ImageFileDto.Response();
         testImg.setFilepath("/static/img/image-0.png");
         testImgList.add(testImg);
 
@@ -91,56 +95,100 @@ public class ItemApiController {
 
         return ResponseEntity.ok(testList);
     }
+
     @PutMapping("/edit/{itemId}")
     public ResponseEntity<?> editItem(@PathVariable int itemId,
-                                   @RequestPart(value = "itemRequest")ItemDto.Request itemDto,
-                                   @RequestPart(value = "plusFile") List<MultipartFile> plusFile,
-                                   @RequestPart(value = "removeFile")List<String> rmFile,
-                                   @AuthenticationPrincipal PrincipalDetails principalDetails) {
+                                      @RequestPart(value = "itemRequest") ItemDto.Request itemDto,
+                                      @RequestPart(value = "plusFile") List<MultipartFile> plusFile,
+                                      @RequestPart(value = "removeFile") List<String> rmFile,
+                                      @AuthenticationPrincipal PrincipalDetails principalDetails) {
         itemService.editItem(itemId, itemDto, plusFile, rmFile, principalDetails);
         return ResponseEntity.status(HttpStatus.OK).body("ok");
     }
-    @GetMapping("/item/basket/{itemId}")
-    public void gotoBasket(@PathVariable int itemId , @AuthenticationPrincipal PrincipalDetails principalDetails){
-        userService.setBasket(itemId, principalDetails.getName());
+
+    @GetMapping("/item/basket/{id}")
+    public void gotoBasket(@PathVariable(value = "id") int id, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        System.out.println("go basket");
+        // userService.setBasket(id, principalDetails.getName());
     }
 
     @GetMapping("/comments/{itemId}")
-    public ResponseEntity<?> loadComments(@PathVariable(value = "itemId") int itemId){
-        List<CommentDto.Response> testCommentList = new ArrayList<>();
-        CommentDto.Response testComment = new CommentDto.Response();
-        LocalDateTime n = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:hh:mm");
-        String formattedDateTime = n.format(formatter);
-
-        testComment.setCommentId(1);
-        testComment.setWriter("tester");
-        testComment.setComment("comment test");
-        testComment.setParentId(-1);
-        testComment.setDepth(0);
-        testComment.setLikes(0);
-        testComment.setViewStatus(false);
-        testComment.setCreatedAt(formattedDateTime);
-
-        testCommentList.add(testComment);
-
-
-        CommentDto.Response testComment2 = new CommentDto.Response();
-        LocalDateTime n2 = LocalDateTime.now();
-        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd:hh:mm");
-        String formattedDateTime2 = n2.format(formatter2);
-
-        testComment.setCommentId(2);
-        testComment.setWriter("tester2");
-        testComment.setComment("comment2 test");
-        testComment.setParentId(1);
-        testComment.setDepth(1);
-        testComment.setLikes(0);
-        testComment.setViewStatus(false);
-        testComment.setCreatedAt(formattedDateTime2);
-
-        testCommentList.add(testComment2);
+    public ResponseEntity<?> loadComments(@PathVariable(value = "itemId") int itemId) {
+        List<CommentDto.Response> testCommentList = makeTestComment();
 
         return ResponseEntity.ok(testCommentList);
+    }
+
+    private List<CommentDto.Response> makeTestComment() {
+        List<CommentDto.Response> testCommentList = new ArrayList<>();
+
+        for (int i = 1; i <= 10; ++i) {
+            CommentDto.Response testComment = new CommentDto.Response();
+            LocalDateTime n = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:hh:mm");
+            String formattedDateTime = n.format(formatter);
+
+            testComment.setCommentId(i);
+            testComment.setWriter("tester" + i);
+            testComment.setComment("comment test" + i);
+            testComment.setParentId(-1);
+            testComment.setDepth(0);
+            testComment.setLikes(0);
+            testComment.setViewStatus(false);
+            testComment.setCreatedAt(formattedDateTime);
+            testCommentList.add(testComment);
+        }
+        makeChildComment(testCommentList);
+        return testCommentList;
+    }
+
+    private void makeChildComment(List<CommentDto.Response> pComment) {
+        int k = 1;
+        for (int i = 11; i <= 20; ++i) {
+            CommentDto.Response testComment = new CommentDto.Response();
+            LocalDateTime n = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:hh:mm");
+            String formattedDateTime = n.format(formatter);
+
+            testComment.setCommentId(i);
+            testComment.setWriter("child test" + i);
+            testComment.setComment("comment child test" + i);
+            testComment.setParentId(k++);
+            testComment.setDepth(1);
+            testComment.setLikes(0);
+            testComment.setViewStatus(false);
+            testComment.setCreatedAt(formattedDateTime);
+            pComment.add(testComment);
+        }
+        makeChildChildComment(pComment);
+    }
+
+    private void makeChildChildComment(List<CommentDto.Response> pComment) {
+
+        int k = 11;
+        for (int i = 21; i <= 30; ++i) {
+            CommentDto.Response testComment = new CommentDto.Response();
+            LocalDateTime n = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:hh:mm");
+            String formattedDateTime = n.format(formatter);
+
+            testComment.setCommentId(i);
+            testComment.setWriter("child test" + i);
+            testComment.setComment("comment child child test" + i);
+            testComment.setParentId(k++);
+            testComment.setDepth(2);
+            testComment.setLikes(0);
+            testComment.setViewStatus(false);
+            testComment.setCreatedAt(formattedDateTime);
+            pComment.add(testComment);
+        }
+    }
+
+    @PostMapping("/address")
+    public void getAddress(@RequestBody AddressDto.Request address) {
+        System.out.println("postcode" + address.getPostcode());
+        System.out.println("road" + address.getRoadAddress());
+        System.out.println("jibun" + address.getJibunAddress());
+        System.out.println("detail" + address.getDetailAddress());
     }
 }
