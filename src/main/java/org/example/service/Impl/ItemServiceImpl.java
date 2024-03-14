@@ -75,8 +75,6 @@ public class ItemServiceImpl implements ItemService {
             UUID uuid = UUID.randomUUID();
             String filename = uuid + "_" + file.getOriginalFilename();
             Path path = Paths.get(imagePath + File.separator + filename).toAbsolutePath();
-
-
             // 실제 저장되는 코드
             try {
                 file.transferTo(path.toFile());

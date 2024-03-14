@@ -10,15 +10,14 @@
         <p>Home</p>
     </section>
     <section>
-        <div id="imageShow">
-        </div>
+        <div class="imageShow"></div>
 
         <form method="post" enctype="multipart/form-data">
             <div class="button">
                 <label for="chooseFile">
                     Click Here
                 </label>
-                <input type="file" id="chooseFile" name="chooseFile" multiple accept="image/*" onchange="loadFile(this)" />
+                <input type="file" id="chooseFile" name="chooseFile" multiple accept="image/*" onchange="loadFile()" />
             </div>
             <div class="fileContainer">
 
@@ -28,40 +27,69 @@
                 </div>
 
                 <div class="buttonContainer">
-                    <div class="submitButton" id="submitButton">SUBMIT</div>
+                    <div class="submitButton" id="submitButton" onclick="saveFile()">SUBMIT</div>
                 </div>
-
             </div>
-
         </form>
     </section>
 <footer th:replace="~{fragments/footer.html::footer}"></footer>
 </body>
 <script>
-    function loadFile(input){
-        let fileList = input.files;
-        let fileLength = fileList.length;
 
-        let fileName = document.querySelector('#fileName');
+    function saveFile(){
+        let fileInput = document.querySelector('#chooseFile');
+        let fileList = fileInput.files;
+        let formData = new FormData();
 
-        let fileNameElement = document.getElementById('fileName');
-        fileNameElement.innerText = ""; // 파일 이름 초기화
-
-        let imageShow = document.querySelector('#imageShow');
-        imageShowElement.innerHTML = ""; // 이미지 보여주는 요소 초기화
-
-        for (iet i = 0; i < fileLength; ++i) {
-            fileName.innerText += `${fileList[i].name}\t`;
+        for (let i = 0; i < fileList.length; i++) {
+            formData.append('image[]', fileList[i]);
         }
 
-        for (iet i = 0; i < fileLength; ++i) {
-            let newImage = document.createElement("img");
-            newImage.setAttribute("class", "img");
-
-            newImage.src = URL.createObjectURL(fileList[i]);
-            imageShow.appendChild(newImage);
-        }
-
+        $.ajax({
+            type:'post',
+            url:'/home/api/saveImage',
+            processData:false,
+            contentType:false,
+            data:formData,
+            success:function(){
+                alert('save file');
+            },
+            error:function(error){
+                alert('fail to save file', error);
+            }
+        });
     }
+
+    function loadFile() {
+    <!-- this 전달 값은 input 요소 -->
+    <!-- filesList.value 는 실패-->
+        let resetImg = document.querySelector('.imageShow');
+        let resetFileName = document.querySelector('#fileName');
+        resetImg.textContent = '';
+        resetFileName.textContent = '';
+
+        let fileInput = document.querySelector('#chooseFile');
+        let files = fileInput.files;
+        let fileName = document.querySelector('#fileName');
+        let display = document.querySelector('.imageShow');
+
+        let formData = new FormData();
+
+        for (let i = 0; i < files.length; ++i){
+            formData.append('image[]', files[i]);
+        }
+        let images = formData.getAll('image[]');
+
+        for (let i = 0; i < files.length;++i){
+            fileName.textContent += files[i].name + ' ';
+
+            let newImage = document.createElement('img');
+            newImage.setAttribute('class' , 'newImage');
+
+            newImage.src = URL.createObjectURL(images[i]);
+            display.appendChild(newImage);
+        }
+    }
+
 </script>
 </html>
