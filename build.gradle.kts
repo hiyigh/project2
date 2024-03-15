@@ -28,6 +28,7 @@ dependencies {
     implementation ("org.springframework.boot:spring-boot-starter-jdbc")
     implementation ("org.mariadb.jdbc:mariadb-java-client")
     implementation ("com.zaxxer:HikariCP") //5.0.1
+
     implementation ("org.springframework.boot:spring-boot-starter-aop")
 
     compileOnly ("org.projectlombok:lombok")

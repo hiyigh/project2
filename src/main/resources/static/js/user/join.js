@@ -1,4 +1,5 @@
-const fields = ['input_email', 'input_userName', 'input_password'];
+const fields = ['email', 'name', 'password'];
+
 const valid = new ValidUtil(fields);
 
 let valid_email = false;
@@ -20,7 +21,7 @@ $('#input_email').on('input', function(){
         },
         error:function(data) {
             valid_email = false;
-            ValidUtil.validError(data);
+            ValidUtil.validError(data); // 서버에서 error 정보 전달
         }
     });
 });

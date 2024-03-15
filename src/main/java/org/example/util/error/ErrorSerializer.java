@@ -15,6 +15,7 @@ public class ErrorSerializer extends JsonSerializer<Errors> {
         gen.writeStartArray();
         value.getFieldErrors().forEach(e->{
             try{
+                // Error 에서 cause, code, message String 을 json 으로 입력
                 gen.writeStartObject();
                 gen.writeStringField("cause", e.getField());
 //                gen.writeStringField("objectName", e.getObjectName());
