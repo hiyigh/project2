@@ -5,6 +5,8 @@ import org.example.model.dto.shop.ItemDto;
 import org.example.model.dto.shop.OrderDto;
 import org.example.model.entity.User;
 import org.example.model.entity.shop.Comment;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -155,5 +157,18 @@ public class UserRepository {
     public void setBasket(int itemId, String userName) {
         String sql = "insert into Basket (userName, itemId) values (?,?)";
         jdbcTemplate.update(sql, userName, itemId);
+    }
+
+    public boolean checkDuplicatedEmail(String email) {
+        String sql = "select count(*) from Users where user_email like ?";
+        try{
+            Integer count = jdbcTemplate.queryForObject(sql,Integer.class, "%" + email + "%");
+            if (count != null) return true;
+
+            return false;
+        } catch(DataAccessException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

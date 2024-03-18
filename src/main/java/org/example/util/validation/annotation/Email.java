@@ -18,7 +18,7 @@ import static java.lang.annotation.ElementType.TYPE_USE;
 @Target({ METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE })   //해당 어노테이션이 어디에 사용될 수 있는지
 public @interface Email {
     // annotation member method
-    String message() default "Email is not allow";       //default message
-    Class<?>[] groups() default {};                         //targeted group을 customize하기 위해 사용
-    Class<? extends Payload>[] payload() default {};        //확장성을 위해 사용
+    String message() default "Email is not allow";       //유효성 검사에서 유효하지 않을 때 호출되는 default message
+    Class<?>[] groups() default {};                         //targeted group을 customize하기 위해 사용 , bean validation group 지정
+    Class<? extends Payload>[] payload() default {};        //확장성을 위해 사용 , 부가적인 메타 데이터 반환??
 }

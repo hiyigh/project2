@@ -3,7 +3,6 @@ package org.example.util.validation.validator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.example.util.validation.annotation.Password;
-import org.springframework.util.StringUtils;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -11,7 +10,6 @@ import java.nio.charset.StandardCharsets;
 public class UserPasswordValidator implements ConstraintValidator<Password, String> {
     private int min;
     private int max;
-
     private final String allowNumber = "(?=.*[0-9])";
     private final String allowEnglish = "(?=.*[a-z])";
     private final String allowSpecial = "(?=.*[!\"#$%&'()*+,-./:;<=>?@^_`{|}\\[\\]~\\\\])(?=\\S+$)";

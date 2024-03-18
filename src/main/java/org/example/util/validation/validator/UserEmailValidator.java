@@ -21,7 +21,8 @@ public class UserEmailValidator implements ConstraintValidator<Email, String> {
         value = URLDecoder.decode(value, StandardCharsets.UTF_8);
         // url 넘어오는 특수문자 처리
         if(!value.matches(regexp)) {
-            context.buildConstraintViolationWithTemplate("이메일이 형식과 맞지 않습니다.").addConstraintViolation();
+            context.buildConstraintViolationWithTemplate("이메일이 형식과 맞지 않습니다.")
+                    .addConstraintViolation();
             return false;
         }
         return true;

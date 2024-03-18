@@ -17,6 +17,7 @@ class ValidUtil{
             let findErrorObj = error_list.find((error)=>{ // error_list 에서 find () -> 전달받은 error.cause 가 this.fields 요소와 같은지
                                     return error.cause == this.fields[i];   // 서버 errorCode cause 명과 일치시켜야 한다.
                                 });
+
             if (findErrorObj != undefined) {
                 this.toggle_valid_status(findErrorObj.cause, 'red');
                 this.change_display_status(findErrorObj.cause, 'block', findErrorObj.message);
@@ -27,7 +28,6 @@ class ValidUtil{
                 this.change_display_status(this.fields[i],'none',null);
             }
         }
-
     }   
     toggle_valid_status(field, color){
         if (color == 'green'){

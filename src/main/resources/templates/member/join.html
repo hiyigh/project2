@@ -29,27 +29,31 @@
             <form action="/join" method="post">
                 <div class="row" style="border:solid 1px;margin-left: 0px;padding-left: 20px;margin-right: 0px;">
                     <div class="row mb-2" style="width=50%">
-                        <label for="input_email">이메일</label>
-                        <input id="input_email" name="email" type="email" aria-describedby="input_emailValid"/>
-                        <div id="input_emailValid" style="display:none;">이메일을 확인해 주십시오</div>
+                        <label for="email">이메일</label>
+                        <input class="is-valid" id="email" name="email" type="email" required/>
+                        <div id="invalid_email_feedback" style="display:none;">이메일을 확인해 주십시오</div>
+                        <div id="valid_email_feedback">확인</div>
                     </div>
 
                     <div class="row mb-2">
-                        <label for="input_userName">이름</label>
-                        <input id="input_userName" name="userName" type="text" aria-describedby="input_userNameValid"/>
-                        <div id="input_userNameValid" style="display:none;">이름을 확인해 주십시오</div>
+                        <label for="name">이름</label>
+                        <input class="is-valid" id="name" name="name" type="text" required/>
+                        <div id="invalid_name_feedback" style="display:none;" >이름을 확인해 주십시오</div>
+                        <div id="valid_name_feedback">확인</div>
                     </div>
 
                     <div class="row mb-2">
-                        <label for="input_password">비밀번호</label>
-                        <input id="input_password" name="password" type="password" aria-describedby="input_passwordValid"/>
-                        <div id="input_passwordValid" style="display:none;">비밀번호를 확인해 주십시오</div>
+                        <label for="password">비밀번호</label>
+                        <input  class="is-valid" id="password" name="password" type="password" required/>
+                        <div id="invalid_password_feedback" style="display:none;">비밀번호를 확인해 주십시오</div>
+                        <div id="valid_password_feedback">확인</div>
                     </div>
 
                     <div class="row mb-2">
-                        <label for="check_password">비밀번호 확인</label>
-                        <input id="check_password" name="password" type="password" aria-describedby="check_passwordValid"/>
-                        <div id="check_passwordValid" style="display:none;">비밀번호가 일치하지 않습니다</div>
+                        <label for="checkPassword">비밀번호 확인</label>
+                        <input id="checkPassword" name="password" type="password" required/>
+                        <div id="invalid_checkPassword_feedback" style="display:none;">비밀번호가 일치하지 않습니다</div>
+                        <div id="valid_checkPassword_feedback">확인</div>
                     </div>
 
                     <div class="row mb-2">
@@ -60,7 +64,7 @@
         </section>
     </main>
     <footer th:replace="~{fragments/footer.html::footer}"></footer>
-    <script src="/static/js/validutil.js"></script>
+    <script src="/static/js/validation.js"></script>
     <script src="/static/js/user/join.js"></script>
 </body>
 </html>
