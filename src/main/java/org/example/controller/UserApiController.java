@@ -28,9 +28,9 @@ public class UserApiController {
     }
     @PostMapping("/join/name/check")
     public ResponseEntity<?> checkName(@RequestParam(value="name") @Valid @Name String name) {
-        if (userRepository.checkDuplicatedName(name)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorCode.NAME_DUPLICATED);
-        }
+//        if (userRepository.checkDuplicatedName(name)) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorCode.NAME_DUPLICATED);
+//        }
         return ResponseEntity.ok().build();
     }
     @PostMapping("/join/password/check")
